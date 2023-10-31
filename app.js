@@ -31,7 +31,7 @@ app.set("view engine", "handlebars");
 //static files
 app.use(express.static("public"));
 
-app.use(express.urlencoded({ extends: true }));
+// app.use(express.urlencoded({ extends: true }));
 
 app.get("/", (req, res) => {
   res.render("index", { restaurants: restaurantData.results });
