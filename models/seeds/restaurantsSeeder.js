@@ -5,7 +5,7 @@ const restaurantList = require("../../restaurant.json").results;
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-mongoose.connect(process.env.NODE_ENV, {
+mongoose.connect(process.env.MONGODB_ENV, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -18,6 +18,7 @@ db.on("error", () => {
 
 db.once("open", () => {
   console.log("mongoDB connected");
+
   Restaurant.create(restaurantList)
     .then(() => {
       console.log("run seed done");
