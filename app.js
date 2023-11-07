@@ -62,12 +62,17 @@ app.post("/restaurants", (req, res) => {
     });
 });
 
-// 瀏覽餐廳
+// 瀏覽特定餐廳
 app.get("/restaurants/:restaurant_id", (req, res) => {
-  const restaurant = restaurantData.results.find((item) => {
-    return item.id.toString() === req.params.restaurant_id;
-  });
-  res.render("show", { restaurant: restaurant });
+  const id = req.params.restaurant_id;
+  return Restaurant.findById(id)
+    .lean()
+    .then((item) => {
+      res.render("show", { restaurant: item });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 // 搜尋餐廳
