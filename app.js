@@ -29,23 +29,48 @@ db.once("open", () => {
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-//static files
+// 設定靜態檔案資料夾位置
 app.use(express.static("public"));
 
-// app.use(express.urlencoded({ extends: true }));
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.urlencoded({ extends: true }));
 
+// 瀏覽全部餐廳
 app.get("/", (req, res) => {
-  res.render("index", { restaurants: restaurantData.results });
+  Restaurant.find()
+    .lean()
+    .then((restaurantData) =>
+      res.render("index", { restaurants: restaurantData })
+    )
+    .catch((error) => console.log(error));
 });
 
+// 瀏覽新餐廳
+app.get("/restaurants/new", (req, res) => {
+  res.render("new");
+});
+
+// 增加新餐廳
+app.post("/restaurants", (req, res) => {
+  const name = req.body.name;
+  return Restaurant.create(name)
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// 瀏覽餐廳
 app.get("/restaurants/:restaurant_id", (req, res) => {
-  console.log("restaurant_id", req.params.restaurant_id);
   const restaurant = restaurantData.results.find((item) => {
     return item.id.toString() === req.params.restaurant_id;
   });
   res.render("show", { restaurant: restaurant });
 });
 
+// 搜尋餐廳
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim().toLocaleLowerCase();
   const restaurantSearch = restaurantData.results.filter((item) => {
