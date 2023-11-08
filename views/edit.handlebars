@@ -1,7 +1,7 @@
 <div class="container form">
   <div class="form-outer">
     <div class="form-inner">
-      <form action="/restaurants" method="post">
+      <form action="/restaurants/{{restaurant._id}}/edit" method="post">
         <div class="container d-flex flex-column mt-3" style="width:400px">
           <div class="m-2">
             <label for="name" class="form-label">店名<span>:</span></label>
@@ -11,6 +11,7 @@
               name="name"
               placeholder="請輸入餐廳名"
               id="name"
+              value="{{restaurant.name}}"
             />
           </div>
 

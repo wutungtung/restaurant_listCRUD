@@ -75,6 +75,36 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
     });
 });
 
+// 編輯餐廳頁面
+app.get("/restaurants/:restaurant_id/edit"),
+  (req, res) => {
+    const id = req.params.restaurant_id;
+    return Restaurant.findById(id)
+      .lean()
+      .then((item) => {
+        res.render("edit", { restaurant: item });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+//更新餐廳
+app.post("/restaurants/:restaurant_id/edit"),
+  (req, res) => {
+    const id = req.params.restaurant_id;
+    const name = req.params.id;
+    return Restaurant.findById(id)
+      .then((item) => {
+        item.name = name;
+        return item.save();
+      })
+      .then(() => {
+        res.redirect(`/restaurants/${id}`);
+      })
+      .catch((error) => console.log(error));
+  };
+
 // 搜尋餐廳
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim().toLocaleLowerCase();
