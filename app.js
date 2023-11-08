@@ -104,7 +104,7 @@ app.get("/restaurants/:restaurant_id/edit"),
 app.post("/restaurants/restaurant_:id/edit"),
   (req, res) => {
     const id = req.params.restaurant_id;
-    const name = req.body.name;
+    const name = req.body;
     return Restaurant.findById(id)
       .then((item) => {
         item.name = name;
