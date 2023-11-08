@@ -50,15 +50,27 @@ app.get("/restaurants/new", (req, res) => {
 });
 
 // 增加新餐廳
+// 直接操作Restaurant
+// app.post("/restaurants", (req, res) => {
+//   const name = req.body; // 從 req.body 拿出表單裡的資料
+//   return Restaurant.create(name) //create不加 {}
+//     .then(() => {
+//       res.redirect("/");
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// });
+// 先產生物件，再把資料存入該物件
 app.post("/restaurants", (req, res) => {
-  const name = req.body; // 從 req.body 拿出表單裡的資料
-  return Restaurant.create(name) //create不加{}
+  const name = req.body;
+  const restaurant = new Restaurant(name); //create不加 {}
+  return restaurant
+    .save()
     .then(() => {
       res.redirect("/");
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((error) => console.log(error));
 });
 
 // 瀏覽特定餐廳
