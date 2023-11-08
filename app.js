@@ -5,7 +5,6 @@ const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 
-// 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -76,7 +75,7 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
 });
 
 // 編輯餐廳頁面
-app.get("/restaurants/:restaurant_id/edit"),
+app.get("/restaurant/:restaurant_id/edit"),
   (req, res) => {
     const id = req.params.restaurant_id;
     return Restaurant.findById(id)
@@ -90,10 +89,10 @@ app.get("/restaurants/:restaurant_id/edit"),
   };
 
 //更新餐廳
-app.post("/restaurants/:restaurant_id/edit"),
+app.post("/restaurants/restaurant_id/edit"),
   (req, res) => {
-    const id = req.params.restaurant_id;
-    const name = req.params.id;
+    const id = req.params.id;
+    const name = req.body.name;
     return Restaurant.findById(id)
       .then((item) => {
         item.name = name;
