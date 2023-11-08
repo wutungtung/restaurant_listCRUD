@@ -51,8 +51,8 @@ app.get("/restaurants/new", (req, res) => {
 
 // 增加新餐廳
 app.post("/restaurants", (req, res) => {
-  const name = req.body.name; // 從 req.body 拿出表單裡的 name 資料
-  return Restaurant.create({ name })
+  const newName = req.body; // 從 req.body 拿出表單裡的 name 資料
+  return Restaurant.create({ newName })
     .then(() => {
       res.redirect("/");
     })
