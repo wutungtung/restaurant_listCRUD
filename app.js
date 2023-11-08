@@ -89,9 +89,9 @@ app.get("/restaurant/:restaurant_id/edit"),
   };
 
 //更新餐廳
-app.post("/restaurants/restaurant_id/edit"),
+app.post("/restaurants/restaurant_:id/edit"),
   (req, res) => {
-    const id = req.params.id;
+    const id = req.params.restaurant_id;
     const name = req.body.name;
     return Restaurant.findById(id)
       .then((item) => {
