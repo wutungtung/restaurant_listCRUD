@@ -75,7 +75,7 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
 });
 
 // 編輯餐廳頁面
-app.get("/restaurant/:restaurant_id/edit"),
+app.get("/restaurants/:restaurant_id/edit"),
   (req, res) => {
     const id = req.params.restaurant_id;
     return Restaurant.findById(id)
