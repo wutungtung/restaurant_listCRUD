@@ -46,13 +46,13 @@ app.get("/", (req, res) => {
 
 // 瀏覽新餐廳
 app.get("/restaurants/new", (req, res) => {
-  res.render("new");
+  return res.render("new");
 });
 
 // 增加新餐廳
 app.post("/restaurants", (req, res) => {
-  const name = req.body.name;
-  return Restaurant.create(name)
+  const name = req.body.name; // 從 req.body 拿出表單裡的 name 資料
+  return Restaurant.create({ name })
     .then(() => {
       res.redirect("/");
     })
