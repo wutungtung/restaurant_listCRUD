@@ -1,11 +1,11 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
-// const restaurantData = require("./restaurant.json");
 const Restaurant = require("./models/restaurants");
 const app = express();
 const port = 3000;
 const mongoose = require("mongoose");
 
+// 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
