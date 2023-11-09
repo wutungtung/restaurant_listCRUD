@@ -34,7 +34,7 @@
 4. 在本地開啟之後，透過終端機進入資料夾，輸入：
 
    ```bash
-   npm install express@4.16.4 express-handlebars@4.0.2
+   npm install mongoose@5.9.7
    ```
 
 5. 在專案資料夾內新增一個.env 檔案，並輸入 MongoDB 你的連線字串
