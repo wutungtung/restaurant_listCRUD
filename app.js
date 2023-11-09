@@ -61,6 +61,7 @@ app.get("/restaurants/new", (req, res) => {
 //       console.log(error);
 //     });
 // });
+// 增加新餐廳
 // 先產生物件，再把資料存入該物件
 app.post("/restaurants", (req, res) => {
   const name = req.body;
