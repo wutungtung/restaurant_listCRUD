@@ -116,16 +116,35 @@ app.post("/restaurants/:restaurant_id/edit", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// 刪除餐廳
+app.post("/restaurants/:restaurant_id/delete", (req, res) => {
+  const id = req.params.restaurant_id;
+  return Restaurant.findById(id)
+    .then((item) => {
+      item.remove();
+    })
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
 // 搜尋餐廳
 app.get("/search", (req, res) => {
-  const keyword = req.query.keyword.trim().toLocaleLowerCase();
-  const restaurantSearch = restaurantData.results.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(keyword) ||
-      item.category.toLowerCase().includes(keyword)
-    );
-  });
-  res.render("index", { restaurants: restaurantSearch, keyword: keyword });
+  const keyword = req.query.keyword.trim().toLowerCase();
+  Restaurant.find()
+    .lean()
+    .then((restaurantData) => {
+      const restaurantSearch = restaurantData.filter((item) => {
+        return (
+          item.name.toLowerCase().includes(keyword) ||
+          item.category.toLowerCase().includes(keyword)
+        );
+      });
+      res.render("index", { restaurants: restaurantSearch, keyword: keyword });
+    });
 });
 
 app.listen(port, () => {

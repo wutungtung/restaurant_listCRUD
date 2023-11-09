@@ -68,7 +68,13 @@
               <span>
                 <a class="m-1" href="./restaurants/{{this._id}}">Detail</a>
                 <a href="./restaurants/{{this._id}}/edit">edit</a>
-                <form action="/restaurants"></form>
+                <form
+                  action="./restaurants/{{this._id}}/delete"
+                  method="POST"
+                  style="display: inline;"
+                >
+                  <button type="submit">delete</button>
+                </form>
               </span>
             </div>
           </div>
