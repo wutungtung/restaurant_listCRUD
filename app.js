@@ -51,29 +51,29 @@ app.get("/restaurants/new", (req, res) => {
 
 // 增加新餐廳
 // 直接操作Restaurant
-// app.post("/restaurants", (req, res) => {
-//   const name = req.body; // 從 req.body 拿出表單裡的資料
-//   return Restaurant.create(name) //create不加 {}
-//     .then(() => {
-//       res.redirect("/");
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// });
-
-// 增加新餐廳
-// 先產生物件，再把資料存入該物件
 app.post("/restaurants", (req, res) => {
-  const name = req.body;
-  const restaurant = new Restaurant(name); //create不加 {}
-  return restaurant
-    .save()
+  const name = req.body; // 從 req.body 拿出表單裡的資料
+  return Restaurant.create(name) //create不加 {}
     .then(() => {
       res.redirect("/");
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+    });
 });
+
+// 增加新餐廳
+// 先產生物件，再把資料存入該物件
+// app.post("/restaurants", (req, res) => {
+//   const name = req.body;
+//   const restaurant = new Restaurant(name); //create不加 {}
+//   return restaurant
+//     .save()
+//     .then(() => {
+//       res.redirect("/");
+//     })
+//     .catch((error) => console.log(error));
+// });
 
 // 瀏覽特定餐廳
 app.get("/restaurants/:restaurant_id", (req, res) => {
@@ -104,10 +104,17 @@ app.get("/restaurants/:restaurant_id/edit", (req, res) => {
 //更新餐廳
 app.post("/restaurants/:restaurant_id/edit", (req, res) => {
   const id = req.params.restaurant_id;
-  const name = req.body;
-  return Restaurant.findById(id)
+  const { name, category, image, location, phone, google_map, description } =
+    req.body;
+  return Restaurant.findById(id, name)
     .then((item) => {
       item.name = name;
+      item.category = category;
+      item.image = image;
+      item.location = location;
+      item.phone = phone;
+      item.google_map = google_map;
+      item.description = description;
       return item.save();
     })
     .then(() => {
